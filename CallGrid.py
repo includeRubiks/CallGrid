@@ -8,11 +8,11 @@ import json
 
 callsign = ""
 
-while 1==1:
+while True:
 
-    callsign = input("Enter Callsign: <q> to QUIT  >> ")
+    callsign = input("Enter Callsign: <q> to QUIT  >> ").upper()
     
-    if callsign == "q" :
+    if callsign == "Q" :
         break
 
     else:

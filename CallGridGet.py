@@ -8,11 +8,11 @@ import json
 
 callGet = ""
 
-while 1==1:
+while True:
 
-    callGet = input("Enter Callsign: <q> to QUIT  >> ")
+    callGet = input("Enter Callsign: <q> to QUIT  >> ").upper()
     
-    if callGet == "q" :
+    if callGet == "Q" :
         break
 
     else:
