@@ -39,10 +39,10 @@ while True:
             database = input("Enter database (<c> for callook.info, <d> for HamDB) >>").upper()
 
             if database == "C":
-                path = ["","location", "gridsquare"]
+                path = ["location", "gridsquare"]
                 try:
                     response = requests.get(f"https://callook.info/{call}/json")
-                    grid = response.json()[path[1]][path[2]]
+                    grid = response.json()[path[0]][path[1]]
                     print (f"{callsign} GRID is {grid}")
                 except:
                     print (f"CALLSIGN {callsign} INVALID. Quitting...")
