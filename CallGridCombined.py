@@ -8,23 +8,51 @@ while True:
     if callsign == "Q" :
         break
 
-    database = input("Enter database (<c> for callook.info, <d> for HamDB) >>").upper()
+    if callsign == "B" :
+        bulk = True
+        bulkfile = input("Path to file with callsigns >> ")
+        try:
+            with open(bulkfile) as file:
+                callsigns = [s.replace("\n", "") for s in file.readlines()]
+        except:
+            print(f"PATH {bulkfile} INVALID. Quitting...")
+            break
+        database = input("Enter database (<c> for callook.info, <d> for HamDB) >>").upper()
+        if database == "C":
+            for call in callsigns:
+                try:
+                    response = requests.get(f"https://callook.info/{call}/json")
+                    grid = response.json()["location"]["gridsquare"]
+                    print (f"{call} GRID is {grid}")
+                except:
+                    print (f"CALLSIGN {call} INVALID. Quitting...")
+        if database == "D":
+            for call in callsigns:
+                try:
+                    response = requests.get(f"https://api.hamdb.org/v1/{call}/json/")
+                    grid = response.json()["hamdb"]["callsign"]["grid"]
+                    print (f"{call} GRID is {grid}")
+                except:
+                    print (f"CALLSIGN {call} INVALID. Quitting...")
+        
+    if bulk == False:
+            database = input("Enter database (<c> for callook.info, <d> for HamDB) >>").upper()
 
-    if database == "C":
-        api_url = f"https://callook.info/{callsign}/json"
-        path = ["","location", "gridsquare"]
-        try:
-            response = requests.get(api_url)
-            grid = response.json()[path[1]][path[2]]
-            print (f"{callsign} GRID is {grid}")
-        except:
-            print (f"CALLSIGN {callsign} INVALID  <q> to QUIT")
-    if database == "D":
-        api_url = f"https://api.hamdb.org/v1/{callsign}/json/"
-        path = ["hamdb","callsign", "grid"]
-        try:
-            response = requests.get(api_url)
-            grid = response.json()[path[0]][path[1]][path[2]]
-            print (f"{callsign} GRID is {grid}")
-        except:
-            print (f"CALLSIGN {callsign} INVALID  <q> to QUIT")
+            if database == "C":
+                path = ["","location", "gridsquare"]
+                try:
+                    response = requests.get(f"https://callook.info/{call}/json")
+                    grid = response.json()[path[1]][path[2]]
+                    print (f"{callsign} GRID is {grid}")
+                except:
+                    print (f"CALLSIGN {callsign} INVALID. Quitting...")
+                    break
+            if database == "D":
+                path = ["hamdb","callsign", "grid"]
+                try:
+                    response = requests.get(f"https://api.hamdb.org/v1/{call}/json/")
+                    grid = response.json()[path[0]][path[1]][path[2]]
+                    print (f"{callsign} GRID is {grid}")
+                except:
+                    print (f"CALLSIGN {callsign} INVALID. Quitting...")
+                    break

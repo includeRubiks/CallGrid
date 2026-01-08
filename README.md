@@ -1,6 +1,7 @@
 # CallGrid
 Callsign Grid locators
 AJ3DI
+(Bulk and combined file by includeRubiks)
 
 Python
 API
@@ -20,5 +21,5 @@ CallGridGet is different API (hamdb.org)
 
 Things to add
 
-1) Bulk lookup
+1) Bulk lookup - Done!
 
